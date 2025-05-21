@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <HBox spacing="20" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            
+            <!-- Painel da Fila -->
+            <VBox spacing="10" style="-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 15; -fx-background-color: #f5f5f5;">
+                <Label text="Gerenciamento de Fila" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #333;"/>
+                <Separator style="-fx-padding: 5 0 10 0;"/>
+                <TextField fx:id="campoElementoFila" promptText="Digite um elemento para a fila" style="-fx-font-size: 14;"/>
+                
+                <HBox spacing="10" style="-fx-padding: 0 0 10 0;">
+                    <Button text="Enfileirar" fx:id="btnEnfileirar" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12;"/>
+                    <Button text="Desenfileirar" fx:id="btnDesenfileirar" style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12;"/>
+                    <Button text="Ver Frente" fx:id="btnFrente" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12;"/>
+                </HBox>
+                
+                <Label text="Elementos na Fila:" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+                <ListView fx:id="listaFilaView" style="-fx-pref-height: 250; -fx-font-size: 13; -fx-border-color: #ddd;"/>
+            </VBox>
+            
+            <!-- Painel de Eventos -->
+            <VBox spacing="10" style="-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 15; -fx-background-color: #f5f5f5;">
+                <Label text="Gerenciamento de Eventos" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-text-fill: #333;"/>
+                <Separator style="-fx-padding: 5 0 10 0;"/>
+                <Label text="Nome do Evento:" style="-fx-font-size: 14;"/>
+                <TextField fx:id="campoNomeEvento" promptText="Nome do Evento" style="-fx-font-size: 14;"/>
+                
+                <Label text="Data do Evento:" style="-fx-font-size: 14;"/>
+                <DatePicker fx:id="campoDataEvento" style="-fx-font-size: 14;"/>
+                
+                <HBox spacing="10" style="-fx-padding: 0 0 10 0;">
+                    <Button text="Adicionar" fx:id="btnAdicionarEvento" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12;"/>
+                    <Button text="Remover" fx:id="btnRemoverEvento" style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12;"/>
+                    <Button text="Limpar" fx:id="btnLimparEventos" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12;"/>
+                </HBox>
+                
+                <Label text="Eventos Cadastrados:" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+                <ListView fx:id="listaEventosView" style="-fx-pref-height: 250; -fx-font-size: 13; -fx-border-color: #ddd;"/>
+            </VBox>
+        </HBox>
+    </center>
+</BorderPane>
