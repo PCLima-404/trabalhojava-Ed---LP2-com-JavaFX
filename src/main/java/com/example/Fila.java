@@ -4,7 +4,7 @@
  * Essa implementação utiliza um vetor com índice circular para enfileirar e desenfileirar
  * elementos.
  * 
- * @author Grupo 5:
+ * @author Grupo 1:
  * Ana Gomes Souza,
  * Arthur Sousa Costa,
  * Eduardo Miranda Berlink Santos,

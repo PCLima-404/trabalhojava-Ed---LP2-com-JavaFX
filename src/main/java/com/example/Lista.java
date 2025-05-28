@@ -4,7 +4,7 @@
  * Essa implementação gerencia o tamanho dinamicamente até a capacidade inicial
  * definida.
  * 
- * @author Grupo 5:
+ * @author Grupo 1:
  * Ana Gomes Souza,
  * Arthur Sousa Costa,
  * Eduardo Miranda Berlink Santos,

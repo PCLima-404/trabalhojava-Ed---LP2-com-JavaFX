@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
  * data de início, data de fim.
  * Permite adicionar, remover e buscar palestras, além de verificar conflitos de horário.
  * 
- * @author Grupo 5:
+ * @author Grupo 1:
  * Ana Gomes Souza,
  * Arthur Sousa Costa,
  * Eduardo Miranda Berlink Santos,
