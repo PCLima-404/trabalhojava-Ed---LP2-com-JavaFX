@@ -1,5 +1,4 @@
 package com.example;
-
 /**
  * Representa um participante de uma palestra.
  * Cada participante possui um ID, nome, e-mail e uma lista de palestras
