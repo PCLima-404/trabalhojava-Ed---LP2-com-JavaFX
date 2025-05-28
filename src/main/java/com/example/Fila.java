@@ -2,7 +2,7 @@
  * Classe que representa uma fila circular de objetos.
  * 
  * Essa implementação utiliza um vetor com índice circular para enfileirar e desenfileirar
- * elementos, respeitando a ordem FIFO (First In, First Out).
+ * elementos.
  * 
  * @author Grupo 5:
  * Ana Gomes Souza,
@@ -14,8 +14,8 @@
  * Mary Nicole de Sousa Mendes,
  * Pedro César Padre Lima
  * 
- * @version 1.1
- * @since 2025-05-21
+ * @version 1.2
+ * @since 2025-05-22
  */
 package com.example;
 
