@@ -12,16 +12,34 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+
+/**
+ * Classe principal da aplicação JavaFX para gerenciamento de eventos, palestras
+ * e participantes.
+ * 
+ * @author Grupo 1: Eduardo Berlink, Mary Nicole, João Lucas, Marco Antonio,
+ *         Arthur Sousa,
+ *         Henrique Rezende, Ana Gomes Souza e Pedro Cezar.
+ * @since 28-05-2025
+ * @version 1.0
+ */
 public class App extends Application {
 
-    private Lista eventos = new Lista(20); // Lista customizada para eventos
+    /** Lista personalizada para armazenar os eventos */
+    private Lista eventos = new Lista(20);
 
     private ListView<Evento> lvEventos;
     private ListView<Palestra> lvPalestras;
     private TextArea taDetalhes;
 
+    /** Formato de data utilizado nas interfaces */
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+    /**
+     * Inicializa a interface gráfica da aplicação.
+     *
+     * @param primaryStage Janela principal do JavaFX.
+     */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Sistema de Gerenciamento de Eventos");
@@ -33,20 +51,20 @@ public class App extends Application {
             mostrarPalestrasEvento(newVal);
         });
 
-        // Lista de palestras
+        // Lista de palestras do evento selecionado
         lvPalestras = new ListView<>();
         lvPalestras.setPrefWidth(300);
         lvPalestras.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             mostrarDetalhesPalestra(newVal);
         });
 
-        // Área de detalhes da palestra ou evento
+        // Área de exibição de detalhes
         taDetalhes = new TextArea();
         taDetalhes.setEditable(false);
         taDetalhes.setPrefWidth(300);
         taDetalhes.setPrefHeight(150);
 
-        // Botões
+        // Botões de ação
         Button btnAddEvento = new Button("Adicionar Evento");
         btnAddEvento.setOnAction(e -> adicionarEvento());
 
@@ -59,7 +77,7 @@ public class App extends Application {
         HBox hBoxBotoes = new HBox(10, btnAddEvento, btnAddPalestra, btnInscrever);
         hBoxBotoes.setPadding(new Insets(10));
 
-        // Layout principal
+
         HBox hBoxListas = new HBox(10, lvEventos, lvPalestras, taDetalhes);
         hBoxListas.setPadding(new Insets(10));
 
@@ -70,20 +88,30 @@ public class App extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // Carregar dados iniciais para teste (opcional)
-        carregarDadosTeste();
+        carregarDadosTeste(); // Dados iniciais para testes
     }
 
-  private void mostrarPalestrasEvento(Evento evento) {
+    /**
+     * Exibe palestras relacionadas ao evento selecionado.
+     *
+     * @param evento Evento selecionado.
+     */
+    private void mostrarPalestrasEvento(Evento evento) {
         lvPalestras.getItems().clear();
         taDetalhes.clear();
         if (evento != null) {
-            taDetalhes.setText(evento.toString()); // Mostra detalhes do evento
+            taDetalhes.setText(evento.toString());
             Palestra[] palestras = evento.listarPalestras();
             lvPalestras.getItems().addAll(palestras);
         }
     }
-   private void mostrarDetalhesPalestra(Palestra palestra) {
+
+    /**
+     * Mostra os detalhes de uma palestra, incluindo participantes inscritos.
+     *
+     * @param palestra Palestra selecionada.
+     */
+    private void mostrarDetalhesPalestra(Palestra palestra) {
         taDetalhes.clear();
         if (palestra != null) {
             StringBuilder sb = new StringBuilder();
@@ -105,6 +133,9 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Abre uma caixa de diálogo para adicionar um novo evento.
+     */
     private void adicionarEvento() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Adicionar Evento");
@@ -133,6 +164,9 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Adiciona uma nova palestra ao evento selecionado.
+     */
     private void adicionarPalestra() {
         Evento eventoSelecionado = lvEventos.getSelectionModel().getSelectedItem();
         if (eventoSelecionado == null) {
@@ -142,7 +176,8 @@ public class App extends Application {
 
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Adicionar Palestra");
-        dialog.setHeaderText("Informe os dados da palestra (id;título;palestrante;local;hora início;hora fim;descrição):");
+        dialog.setHeaderText(
+                "Informe os dados da palestra (id;título;palestrante;local;hora início;hora fim;descrição):");
         dialog.setContentText("Exemplo: P1;Título;Palestrante;Sala 1;09:00;10:00;Descrição");
 
         Optional<String> result = dialog.showAndWait();
@@ -157,9 +192,9 @@ public class App extends Application {
                     String horarioInicio = partes[4].trim();
                     String horarioFinal = partes[5].trim();
                     String descricao = partes[6].trim();
+
                     Palestra palestra = new Palestra(id, titulo, descricao, null, null, 0, local, palestrante, 0);
-                    
-                    
+
                     boolean adicionou = eventoSelecionado.adicionarPalestra(palestra);
                     if (adicionou) {
                         mostrarPalestrasEvento(eventoSelecionado);
@@ -175,6 +210,9 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Inscreve um participante na palestra selecionada.
+     */
     private void inscreverParticipante() {
         Palestra palestraSelecionada = lvPalestras.getSelectionModel().getSelectedItem();
         if (palestraSelecionada == null) {
@@ -199,10 +237,11 @@ public class App extends Application {
                     Participante participante = new Participante(id, nome, email);
                     boolean inscrito = palestraSelecionada.inscreverParticipante(participante);
                     if (inscrito) {
-                        participante.inscreverEmPalestra(palestraSelecionada); // Atualiza lista do participante
+                        participante.inscreverEmPalestra(palestraSelecionada);
                         mostrarAlerta("Sucesso", "Participante inscrito com sucesso.");
                     } else {
-                        mostrarAlerta("Erro", "Não foi possível inscrever participante (palestra cheia ou já inscrito).");
+                        mostrarAlerta("Erro",
+                                "Não foi possível inscrever participante (palestra cheia ou já inscrito).");
                     }
                 } else {
                     mostrarAlerta("Erro", "Dados incompletos. Use o formato correto.");
@@ -213,6 +252,9 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Atualiza a lista visual de eventos exibida na interface.
+     */
     private void atualizarListaEventos() {
         lvEventos.getItems().clear();
         Object[] eventosArray = eventos.selecionarTodos();
@@ -221,6 +263,12 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Exibe uma janela de alerta com uma mensagem personalizada.
+     *
+     * @param titulo   Título da janela.
+     * @param mensagem Conteúdo da mensagem.
+     */
     private void mostrarAlerta(String titulo, String mensagem) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
@@ -229,15 +277,20 @@ public class App extends Application {
         alert.showAndWait();
     }
 
+    /**
+     * Carrega dados de exemplo para facilitar o teste da aplicação.
+     */
     private void carregarDadosTeste() {
         try {
-            Evento e1 = new Evento("EV1", "Java Conference", "Conferência sobre Java", LocalDate.now(), LocalDate.now().plusDays(2));
-            Palestra p1 = new Palestra(STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, null, null, 0, STYLESHEET_MODENA, STYLESHEET_CASPIAN, 0);
-           
-           Palestra p2 = new Palestra(STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, null, null, 0, STYLESHEET_MODENA, STYLESHEET_CASPIAN, 0);
+            Evento e1 = new Evento("EV1", "Java Conference", "Conferência sobre Java", LocalDate.now(),
+                    LocalDate.now().plusDays(2));
+            Palestra p1 = new Palestra(STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, null, null, 0,
+                    STYLESHEET_MODENA, STYLESHEET_CASPIAN, 0);
+            Palestra p2 = new Palestra(STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, null, null, 0,
+                    STYLESHEET_MODENA, STYLESHEET_CASPIAN, 0);
             e1.adicionarPalestra(p1);
             e1.adicionarPalestra(p2);
-
+            
             eventos.anexar(e1);
             atualizarListaEventos();
         } catch (Exception e) {
@@ -245,7 +298,11 @@ public class App extends Application {
         }
     }
 
-    // Método main para lançar a aplicação
+    /**
+     * Método principal. Lança a aplicação JavaFX.
+     *
+     * @param args Argumentos da linha de comando.
+     */
     public static void main(String[] args) {
         launch(args);
     }
