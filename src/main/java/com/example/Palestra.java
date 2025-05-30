@@ -7,9 +7,15 @@ import java.time.LocalDateTime;
  * horário,
  * local, palestrante e controle de participantes e fila de espera.
  * 
- * @author Grupo 1: Eduardo Berlink, Mary Nicole, João Lucas, Marco Antonio,
- *         Arthur Sousa,
- *         Henrique Rezende, Ana Gomes Souza e Pedro Cezar.
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
  * 
  * @since 28-05-2025
  * @version 1.0
