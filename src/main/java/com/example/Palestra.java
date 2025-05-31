@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
  * @version 1.0
  */
 public class Palestra {
+    private static int contadorIds = 0;
     private String id;
     private String titulo;
     private String descricao;
@@ -57,9 +58,9 @@ public class Palestra {
      * @param palestrante         Nome do palestrante.
      * @param limiteParticipantes Número máximo de participantes.
      */
-    public Palestra(String id, String titulo, String descricao, LocalDateTime horarioInicio, LocalDateTime horarioFinal,
+    public Palestra(String titulo, String descricao, LocalDateTime horarioInicio, LocalDateTime horarioFinal,
             int duracao, String local, String palestrante, int limiteParticipantes) {
-        this.id = id;
+        this.id = "PL" + contadorIds++;
         this.titulo = titulo;
         this.descricao = descricao;
         this.horarioInicio = horarioInicio;

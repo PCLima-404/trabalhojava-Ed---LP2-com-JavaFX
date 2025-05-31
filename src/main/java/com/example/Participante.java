@@ -18,6 +18,7 @@ package com.example;
  * @version 1.0
  */
 public class Participante {
+    private static int contadorIds = 0;
     private String id;
     private String nome;
     private Lista palestrasInscritas;
@@ -39,8 +40,8 @@ public class Participante {
      * @param nome  Nome do participante
      * @param email E-mail do participante
      */
-    public Participante(String id, String nome, String email) {
-        this.id = id;
+    public Participante(String nome, String email) {
+        this.id = "PT" + contadorIds++ ;
         this.nome = nome;
         this.email = email;
         this.palestrasInscritas = new Lista(20); // limite de palestras inscritas por participante

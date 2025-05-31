@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
  * @since 2025-05-25
  */
 public class Evento {
+    private static int contadorIds = 0;
     private String id;
     private String nome;
     private String descricao;
@@ -39,8 +40,8 @@ public class Evento {
      * @param dataInicio Data de início do evento.
      * @param dataFim    Data de término do evento.
      */
-    public Evento(String id, String nome, String descricao, LocalDate dataInicio, LocalDate dataFim) {
-        this.id = id;
+    public Evento(String nome, String descricao, LocalDate dataInicio, LocalDate dataFim) {
+        id = "EV" + contadorIds++;
         this.nome = nome;
         this.descricao = descricao;
         this.dataInicio = dataInicio;
@@ -56,8 +57,10 @@ public class Evento {
      * @param descricao Descrição do evento.
      * @param data      Data única do evento.
      */
-    public Evento(String id, String nome, String descricao, LocalDate data) {
-        this(id, nome, descricao, data, data);
+    public Evento(String nome, String descricao, LocalDate data) {
+        this(nome, descricao, data, data);
+        id = "EV" + contadorIds++;
+        this.palestras = new Lista(50);
     }
 
     /**
@@ -69,9 +72,9 @@ public class Evento {
      * @param dataInicioStr Data de início (formato dd/MM/yyyy).
      * @param dataFimStr    Data de fim (formato dd/MM/yyyy).
      */
-    public Evento(String id, String nome, String descricao, String dataInicioStr, String dataFimStr) {
+    public Evento(String nome, String descricao, String dataInicioStr, String dataFimStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.id = id;
+        id = "EV" + contadorIds++;
         this.nome = nome;
         this.descricao = descricao;
         this.dataInicio = LocalDate.parse(dataInicioStr, formatter);
