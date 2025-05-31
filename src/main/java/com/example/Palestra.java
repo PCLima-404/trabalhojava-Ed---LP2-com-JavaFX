@@ -7,14 +7,21 @@ import java.time.LocalDateTime;
  * horário,
  * local, palestrante e controle de participantes e fila de espera.
  * 
- * @author Grupo 1: Eduardo Berlink, Mary Nicole, João Lucas, Marco Antonio,
- *         Arthur Sousa,
- *         Henrique Rezende, Ana Gomes Souza e Pedro Cezar.
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
  * 
  * @since 28-05-2025
  * @version 1.0
  */
 public class Palestra {
+    private static int contadorIds = 0;
     private String id;
     private String titulo;
     private String descricao;
@@ -51,9 +58,9 @@ public class Palestra {
      * @param palestrante         Nome do palestrante.
      * @param limiteParticipantes Número máximo de participantes.
      */
-    public Palestra(String id, String titulo, String descricao, LocalDateTime horarioInicio, LocalDateTime horarioFinal,
+    public Palestra(String titulo, String descricao, LocalDateTime horarioInicio, LocalDateTime horarioFinal,
             int duracao, String local, String palestrante, int limiteParticipantes) {
-        this.id = id;
+        this.id = "PL" + contadorIds++;
         this.titulo = titulo;
         this.descricao = descricao;
         this.horarioInicio = horarioInicio;

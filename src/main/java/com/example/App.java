@@ -1,25 +1,39 @@
 package com.example;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
-import javafx.geometry.Insets;
-import javafx.collections.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 
 /**
  * Classe principal da aplicação JavaFX para gerenciamento de eventos, palestras
  * e participantes.
  * 
- * @author Grupo 1: Eduardo Berlink, Mary Nicole, João Lucas, Marco Antonio,
- *         Arthur Sousa,
- *         Henrique Rezende, Ana Gomes Souza e Pedro Cezar.
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * 
+ * 
  * @since 28-05-2025
  * @version 1.0
  */
@@ -31,9 +45,14 @@ public class App extends Application {
     private ListView<Evento> lvEventos;
     private ListView<Palestra> lvPalestras;
     private TextArea taDetalhes;
+    private Participante participanteCadastrado;
 
     /** Formato de data utilizado nas interfaces */
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    /** Referência global á tela principal */
+    private Stage primaryStage;
+
 
     /**
      * Inicializa a interface gráfica da aplicação.
@@ -42,9 +61,39 @@ public class App extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Sistema de Gerenciamento de Eventos");
+        this.primaryStage = primaryStage;
 
-        // Lista de eventos
+        // Título
+        Label inicio = new Label("Você é:");
+        inicio.setStyle("-fx-font-size: 18px; -fx-padding: 10px;");
+
+        // Botões de administrador e participante
+        Button btnAdmin = new Button("Administrador");
+        Button btnParticipante = new Button("Participante");
+
+        // Ações dos botões
+        btnAdmin.setOnAction(e -> abrirCenaAdministrador());
+        btnParticipante.setOnAction(e -> abrirCenaCadastro());
+
+        // Layout
+        VBox layout = new VBox(15); 
+        layout.getChildren().addAll(inicio, btnAdmin, btnParticipante);
+        layout.setStyle("-fx-alignment: center; -fx-padding: 30px;");
+
+        // Cena principal
+        Scene cenaPrin = new Scene(layout, 300, 200);
+        primaryStage.setTitle("EVENTRIX");
+        primaryStage.setScene(cenaPrin);
+        primaryStage.show();
+    }
+    
+    /**
+     * Exibe interface para o usuário administrador.
+     */
+    private void abrirCenaAdministrador() {
+        System.out.println("Administrador selecionado");
+        
+        //Lista de eventos
         lvEventos = new ListView<>();
         lvEventos.setPrefWidth(250);
         lvEventos.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
@@ -71,12 +120,11 @@ public class App extends Application {
         Button btnAddPalestra = new Button("Adicionar Palestra");
         btnAddPalestra.setOnAction(e -> adicionarPalestra());
 
-        Button btnInscrever = new Button("Inscrever Participante");
-        btnInscrever.setOnAction(e -> inscreverParticipante());
+        Button btnInicial = new Button("Voltar ao início");
+        btnInicial.setOnAction(e -> start(primaryStage));
 
-        HBox hBoxBotoes = new HBox(10, btnAddEvento, btnAddPalestra, btnInscrever);
+        HBox hBoxBotoes = new HBox(10, btnAddEvento, btnAddPalestra, btnInicial);
         hBoxBotoes.setPadding(new Insets(10));
-
 
         HBox hBoxListas = new HBox(10, lvEventos, lvPalestras, taDetalhes);
         hBoxListas.setPadding(new Insets(10));
@@ -84,14 +132,109 @@ public class App extends Application {
         VBox vBoxPrincipal = new VBox(10, hBoxListas, hBoxBotoes);
         vBoxPrincipal.setPadding(new Insets(10));
 
-        Scene scene = new Scene(vBoxPrincipal, 900, 400);
-        primaryStage.setScene(scene);
+        Scene cenaAdm = new Scene(vBoxPrincipal, 900, 400);
+        primaryStage.setScene(cenaAdm);
         primaryStage.show();
-
-        carregarDadosTeste(); // Dados iniciais para testes
     }
 
     /**
+     * Exibe tela de cadastro para usuário participante
+     * 
+     * @param callback função consumidora que será passada quando o participante for criado
+     */
+    private void abrirCenaCadastro() {
+        System.out.println("Participante selecionado");
+
+        // Campos de entrada
+        Label lblNome = new Label("Nome:");
+        TextField txtNome = new TextField();
+        txtNome.setPromptText("Digite seu nome");
+
+        Label lblEmail = new Label("Email:");
+        TextField txtEmail = new TextField();
+        txtEmail.setPromptText("Digite seu email");
+
+        // Botão de cadastro
+        Button btnCadastrar = new Button("Cadastrar");
+
+        // Ação do botão
+        btnCadastrar.setOnAction(e -> {
+            String nome = txtNome.getText();
+            String email = txtEmail.getText();
+
+            if (nome.isEmpty() || email.isEmpty()) {
+                Alert alerta = new Alert(Alert.AlertType.WARNING, "Por favor, preencha todos os campos.");
+                alerta.showAndWait();
+            } else {
+                Participante participante = new Participante(nome, email);
+                this.participanteCadastrado = participante;
+                System.out.println("Participante cadastrado:");
+                System.out.println("Nome: " + nome);
+                System.out.println("Email: " + email);
+                Alert sucesso = new Alert(Alert.AlertType.INFORMATION, "Cadastro realizado com sucesso!");
+                sucesso.showAndWait();
+                abrirCenaParticipante();
+                // Limpa os campos após o cadastro
+                txtNome.clear();
+                txtEmail.clear();
+            }
+        });
+
+        // Layout da tela
+        VBox layout = new VBox(10);
+        layout.setStyle("-fx-padding: 20px; -fx-alignment: center;");
+        layout.getChildren().addAll(lblNome, txtNome, lblEmail, txtEmail, btnCadastrar);
+
+        Scene cenaCadastro = new Scene(layout, 300, 250);
+        primaryStage.setScene(cenaCadastro);
+        primaryStage.show();
+    }
+
+    /**
+     * Exibe interface para usuário participante.
+     */
+    private void abrirCenaParticipante(){
+        // Mesma lista de eventos
+        lvEventos = new ListView<>();
+        lvEventos.setPrefWidth(250);
+        lvEventos.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            mostrarPalestrasEvento(newVal);
+        });
+
+        // Mesma lista de palestras do evento selecionado
+        lvPalestras = new ListView<>();
+        lvPalestras.setPrefWidth(300);
+        lvPalestras.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            mostrarDetalhesPalestra(newVal);
+        });
+
+        // Área de exibição de detalhes
+        taDetalhes = new TextArea();
+        taDetalhes.setEditable(false);
+        taDetalhes.setPrefWidth(300);
+        taDetalhes.setPrefHeight(150);
+
+        Button btnInscrever = new Button("Quero me inscrever!");
+        btnInscrever.setOnAction(e -> inscreverParticipante());
+
+        Button btnInicial = new Button("Voltar ao início");
+        btnInicial.setOnAction(e -> start(primaryStage));
+
+        HBox hBoxBotoes = new HBox(10, btnInscrever, btnInicial);
+        hBoxBotoes.setPadding(new Insets(10));
+
+        HBox hBoxListas = new HBox(10, lvEventos, lvPalestras, taDetalhes);
+        hBoxListas.setPadding(new Insets(10));
+
+        VBox vBoxPrincipal = new VBox(10, hBoxListas, hBoxBotoes);
+        vBoxPrincipal.setPadding(new Insets(10));
+
+        Scene cenaPtc = new Scene(vBoxPrincipal, 900, 400);
+        primaryStage.setScene(cenaPtc);
+        primaryStage.show();
+    }
+
+    /** 
      * Exibe palestras relacionadas ao evento selecionado.
      *
      * @param evento Evento selecionado.
@@ -152,7 +295,7 @@ public class App extends Application {
                     LocalDate dataInicio = LocalDate.parse(partes[2].trim(), formatter);
                     LocalDate dataFim = LocalDate.parse(partes[3].trim(), formatter);
 
-                    Evento evento = new Evento("EV" + (eventos.getTamanho() + 1), nome, descricao, dataInicio, dataFim);
+                    Evento evento = new Evento(nome, descricao, dataInicio, dataFim);
                     eventos.anexar(evento);
                     atualizarListaEventos();
                 } else {
@@ -177,23 +320,22 @@ public class App extends Application {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Adicionar Palestra");
         dialog.setHeaderText(
-                "Informe os dados da palestra (id;título;palestrante;local;hora início;hora fim;descrição):");
-        dialog.setContentText("Exemplo: P1;Título;Palestrante;Sala 1;09:00;10:00;Descrição");
+                "Informe os dados da palestra (título;palestrante;local;hora início;hora fim;descrição):");
+        dialog.setContentText("Exemplo: Título;Palestrante;Sala 1;09:00;10:00;Descrição");
 
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             try {
                 String[] partes = result.get().split(";");
-                if (partes.length == 7) {
-                    String id = partes[0].trim();
-                    String titulo = partes[1].trim();
-                    String palestrante = partes[2].trim();
-                    String local = partes[3].trim();
-                    String horarioInicio = partes[4].trim();
-                    String horarioFinal = partes[5].trim();
-                    String descricao = partes[6].trim();
+                if (partes.length == 6) {
+                    String titulo = partes[0].trim();
+                    String palestrante = partes[1].trim();
+                    String local = partes[2].trim();
+                    String horarioInicio = partes[3].trim();
+                    String horarioFinal = partes[4].trim();
+                    String descricao = partes[5].trim();
 
-                    Palestra palestra = new Palestra(id, titulo, descricao, null, null, 0, local, palestrante, 0);
+                    Palestra palestra = new Palestra(titulo, descricao, null, null, 0, local, palestrante, 0);
 
                     boolean adicionou = eventoSelecionado.adicionarPalestra(palestra);
                     if (adicionou) {
@@ -211,59 +353,6 @@ public class App extends Application {
     }
 
     /**
-     * Inscreve um participante na palestra selecionada.
-     */
-    private void inscreverParticipante() {
-        Palestra palestraSelecionada = lvPalestras.getSelectionModel().getSelectedItem();
-        if (palestraSelecionada == null) {
-            mostrarAlerta("Aviso", "Selecione uma palestra para inscrever participante.");
-            return;
-        }
-
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Inscrever Participante");
-        dialog.setHeaderText("Informe os dados do participante (id;nome;email):");
-        dialog.setContentText("Exemplo: U1;João Silva;joao@email.com");
-
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            try {
-                String[] partes = result.get().split(";");
-                if (partes.length == 3) {
-                    String id = partes[0].trim();
-                    String nome = partes[1].trim();
-                    String email = partes[2].trim();
-
-                    Participante participante = new Participante(id, nome, email);
-                    boolean inscrito = palestraSelecionada.inscreverParticipante(participante);
-                    if (inscrito) {
-                        participante.inscreverEmPalestra(palestraSelecionada);
-                        mostrarAlerta("Sucesso", "Participante inscrito com sucesso.");
-                    } else {
-                        mostrarAlerta("Erro",
-                                "Não foi possível inscrever participante (palestra cheia ou já inscrito).");
-                    }
-                } else {
-                    mostrarAlerta("Erro", "Dados incompletos. Use o formato correto.");
-                }
-            } catch (Exception ex) {
-                mostrarAlerta("Erro", "Erro ao inscrever participante: " + ex.getMessage());
-            }
-        }
-    }
-
-    /**
-     * Atualiza a lista visual de eventos exibida na interface.
-     */
-    private void atualizarListaEventos() {
-        lvEventos.getItems().clear();
-        Object[] eventosArray = eventos.selecionarTodos();
-        for (Object obj : eventosArray) {
-            lvEventos.getItems().add((Evento) obj);
-        }
-    }
-
-    /**
      * Exibe uma janela de alerta com uma mensagem personalizada.
      *
      * @param titulo   Título da janela.
@@ -276,34 +365,40 @@ public class App extends Application {
         alert.setContentText(mensagem);
         alert.showAndWait();
     }
-
+    
     /**
-     * Carrega dados de exemplo para facilitar o teste da aplicação.
+     * Atualiza a lista visual de eventos exibida na interface.
      */
-    private void carregarDadosTeste() {
-        try {
-            Evento e1 = new Evento("EV1", "Java Conference", "Conferência sobre Java", LocalDate.now(),
-                    LocalDate.now().plusDays(2));
-            Palestra p1 = new Palestra(STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, null, null, 0,
-                    STYLESHEET_MODENA, STYLESHEET_CASPIAN, 0);
-            Palestra p2 = new Palestra(STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, STYLESHEET_CASPIAN, null, null, 0,
-                    STYLESHEET_MODENA, STYLESHEET_CASPIAN, 0);
-            e1.adicionarPalestra(p1);
-            e1.adicionarPalestra(p2);
-            
-            eventos.anexar(e1);
-            atualizarListaEventos();
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void atualizarListaEventos() {
+        lvEventos.getItems().clear();
+        Object[] eventosArray = eventos.selecionarTodos();
+        for (Object obj : eventosArray) {
+            lvEventos.getItems().add((Evento) obj);
         }
     }
 
     /**
-     * Método principal. Lança a aplicação JavaFX.
-     *
-     * @param args Argumentos da linha de comando.
+     * Inscreve o participante na palestra selecionada.
      */
-    public static void main(String[] args) {
-        launch(args);
+    private void inscreverParticipante() {
+        Palestra palestraSelecionada = lvPalestras.getSelectionModel().getSelectedItem();
+        if (palestraSelecionada == null) {
+            mostrarAlerta("Aviso", "Selecione uma palestra para inscrever participante.");
+            return;
+        }
+
+        try {
+            boolean inscrito = palestraSelecionada.inscreverParticipante(participanteCadastrado);
+            if (inscrito) {
+                participanteCadastrado.inscreverEmPalestra(palestraSelecionada);
+                mostrarAlerta("Sucesso", "Participante inscrito com sucesso.");
+            } else {
+                mostrarAlerta("Erro",
+                            "Não foi possível inscrever participante (palestra cheia ou já inscrito).");
+            }
+        } catch (Exception ex) {
+            mostrarAlerta("Erro", "Erro ao inscrever participante: " + ex.getMessage());
+        }
+    
     }
 }
