@@ -1,6 +1,7 @@
 package com.example;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Representa uma palestra em um evento. Contém informações como título,
@@ -21,13 +22,14 @@ import java.time.LocalDateTime;
  * @version 1.0
  */
 public class Palestra {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     private static int contadorIds = 0;
     private String id;
     private String titulo;
     private String descricao;
-    private LocalDateTime horario;
-    private LocalDateTime horarioInicio;
-    private LocalDateTime horarioFinal;
+    private LocalTime horario;
+    private LocalTime horarioInicio;
+    private LocalTime horarioFinal;
     private int duracao;
     private String local;
     private String palestrante;
@@ -37,11 +39,11 @@ public class Palestra {
     private Fila filaEspera;
 
     // Getters de horário de início e fim
-    public LocalDateTime getHorarioInicio() {
+    public LocalTime getHorarioInicio() {
         return horarioInicio;
     }
 
-    public LocalDateTime getHorarioFinal() {
+    public LocalTime getHorarioFinal() {
         return horarioFinal;
     }
 
@@ -58,13 +60,13 @@ public class Palestra {
      * @param palestrante         Nome do palestrante.
      * @param limiteParticipantes Número máximo de participantes.
      */
-    public Palestra(String titulo, String descricao, LocalDateTime horarioInicio, LocalDateTime horarioFinal,
+    public Palestra(String titulo, String descricao, String horarioInicio, String horarioFinal,
             int duracao, String local, String palestrante, int limiteParticipantes) {
         this.id = "PL" + contadorIds++;
         this.titulo = titulo;
         this.descricao = descricao;
-        this.horarioInicio = horarioInicio;
-        this.horarioFinal = horarioFinal;
+        this.horarioInicio = LocalTime.parse(horarioInicio, formatter);
+        this.horarioFinal = LocalTime.parse(horarioFinal, formatter);
         this.duracao = duracao;
         this.local = local;
         this.palestrante = palestrante;
@@ -159,8 +161,8 @@ public class Palestra {
      * @param novoHorario Novo horário.
      * @return true se alterado, false se inválido.
      */
-    public boolean alterarHorario(LocalDateTime novoHorario) {
-        if (novoHorario == null || novoHorario.isBefore(LocalDateTime.now())) {
+    public boolean alterarHorario(LocalTime novoHorario) {
+        if (novoHorario == null || novoHorario.isBefore(LocalTime.now())) {
             return false;
         }
 
@@ -195,8 +197,8 @@ public class Palestra {
      * @return true se houver conflito, false caso contrário.
      */
     public boolean verificarConflitoHorario(Palestra outra) {
-        LocalDateTime fimEsta = this.horario.plusMinutes(this.duracao);
-        LocalDateTime fimOutra = outra.getHorario().plusMinutes(outra.getDuracao());
+        LocalTime fimEsta = this.horario.plusMinutes(this.duracao);
+        LocalTime fimOutra = outra.getHorario().plusMinutes(outra.getDuracao());
 
         return this.horario.isBefore(fimOutra) && fimEsta.isAfter(outra.getHorario());
     }
@@ -223,7 +225,7 @@ public class Palestra {
         return id;
     }
 
-    public LocalDateTime getHorario() {
+    public LocalTime getHorario() {
         return horario;
     }
 
