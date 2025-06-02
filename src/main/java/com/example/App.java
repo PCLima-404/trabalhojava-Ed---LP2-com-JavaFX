@@ -401,4 +401,13 @@ public class App extends Application {
         }
     
     }
+
+    /**
+     * Método principal. Lança a aplicação JavaFX.
+     *
+     * @param args Argumentos da linha de comando.
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
