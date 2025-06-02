@@ -42,9 +42,9 @@ public class App extends Application {
     /** Lista personalizada para armazenar os eventos */
     private Lista eventos = new Lista(20);
 
-    private ListView<Evento> lvEventos;
-    private ListView<Palestra> lvPalestras;
-    private TextArea taDetalhes;
+    private ListView<Evento> lvEventos = new ListView<>();
+    private ListView<Palestra> lvPalestras = new ListView<>();
+    private TextArea taDetalhes = new TextArea();
     private Participante participanteCadastrado;
 
     /** Formato de data utilizado nas interfaces */
@@ -94,21 +94,18 @@ public class App extends Application {
         System.out.println("Administrador selecionado");
         
         //Lista de eventos
-        lvEventos = new ListView<>();
         lvEventos.setPrefWidth(250);
         lvEventos.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             mostrarPalestrasEvento(newVal);
         });
 
         // Lista de palestras do evento selecionado
-        lvPalestras = new ListView<>();
         lvPalestras.setPrefWidth(300);
         lvPalestras.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             mostrarDetalhesPalestra(newVal);
         });
 
         // Área de exibição de detalhes
-        taDetalhes = new TextArea();
         taDetalhes.setEditable(false);
         taDetalhes.setPrefWidth(300);
         taDetalhes.setPrefHeight(150);
@@ -195,21 +192,18 @@ public class App extends Application {
      */
     private void abrirCenaParticipante(){
         // Mesma lista de eventos
-        lvEventos = new ListView<>();
         lvEventos.setPrefWidth(250);
         lvEventos.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             mostrarPalestrasEvento(newVal);
         });
 
         // Mesma lista de palestras do evento selecionado
-        lvPalestras = new ListView<>();
         lvPalestras.setPrefWidth(300);
         lvPalestras.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             mostrarDetalhesPalestra(newVal);
         });
 
         // Área de exibição de detalhes
-        taDetalhes = new TextArea();
         taDetalhes.setEditable(false);
         taDetalhes.setPrefWidth(300);
         taDetalhes.setPrefHeight(150);
@@ -320,22 +314,23 @@ public class App extends Application {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Adicionar Palestra");
         dialog.setHeaderText(
-                "Informe os dados da palestra (título;palestrante;local;hora início;hora fim;descrição):");
-        dialog.setContentText("Exemplo: Título;Palestrante;Sala 1;09:00;10:00;Descrição");
+                "Informe os dados da palestra (título;palestrante;local;hora início;hora fim;descrição;limite de participantes):");
+        dialog.setContentText("Exemplo: Título;Palestrante;Sala 1;09:00;10:00;Descrição;40");
 
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             try {
                 String[] partes = result.get().split(";");
-                if (partes.length == 6) {
+                if (partes.length == 7) {
                     String titulo = partes[0].trim();
                     String palestrante = partes[1].trim();
                     String local = partes[2].trim();
                     String horarioInicio = partes[3].trim();
                     String horarioFinal = partes[4].trim();
                     String descricao = partes[5].trim();
+                    int limiteParticipantes = Integer.parseInt(partes[6].trim());
 
-                    Palestra palestra = new Palestra(titulo, descricao, null, null, 0, local, palestrante, 0);
+                    Palestra palestra = new Palestra(titulo, descricao, horarioInicio, horarioFinal, 0, local, palestrante, limiteParticipantes);
 
                     boolean adicionou = eventoSelecionado.adicionarPalestra(palestra);
                     if (adicionou) {
@@ -400,5 +395,14 @@ public class App extends Application {
             mostrarAlerta("Erro", "Erro ao inscrever participante: " + ex.getMessage());
         }
     
+    }
+
+    /**
+     * Método principal. Lança a aplicação JavaFX.
+     *
+     * @param args Argumentos da linha de comando.
+     */
+    public static void main(String[] args) {
+        launch(args);
     }
 }
