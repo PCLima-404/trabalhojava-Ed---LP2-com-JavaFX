@@ -142,7 +142,7 @@ public class Evento {
     public boolean verificarConflitoHorario(Palestra novaPalestra) {
         for (int i = 0; i < palestras.getTamanho(); i++) {
             Palestra p = (Palestra) palestras.selecionar(i);
-            if (p.getLocal().equals(novaPalestra.getLocal()) &&
+            if (p.getData().equals(novaPalestra.getData()) && p.getLocal().equals(novaPalestra.getLocal()) &&
                 p.verificarConflitoHorario(novaPalestra)) {
                 return true;
             }

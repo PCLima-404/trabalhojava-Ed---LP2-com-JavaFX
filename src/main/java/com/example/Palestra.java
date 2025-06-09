@@ -242,7 +242,7 @@ public class Palestra {
     public String exibirDetalhes() {
         return "Título: " + titulo + "\n" +
                 "Descrição: " + descricao + "\n" +
-                "Horário: " + horario + "\n" +
+                "Horário: " + horarioInicio + "\n" +
                 "Duração: " + duracao + " minutos\n" +
                 "Local: " + local + "\n" +
                 "Palestrante: " + palestrante + "\n" +
