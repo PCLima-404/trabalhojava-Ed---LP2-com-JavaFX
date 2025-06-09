@@ -8,7 +8,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -23,36 +22,36 @@ import javafx.stage.Stage;
 public class TelaInicial extends Application {
 
     /** Lista personalizada para armazenar os eventos */
-    public Lista eventos = new Lista(5);
-    public Evento evento1 = new Evento(
+    public static Lista eventos = new Lista(5);
+    public static Evento evento1 = new Evento(
     "TechNova Summit 2025",
     "Uma conferência internacional voltada para inovações em inteligência artificial, computação quântica e tecnologias emergentes. Reúne pesquisadores, startups e investidores do mundo todo.",
     "14/08/2025",
     "17/08/2025"
     );
 
-    public Evento evento2 = new Evento(
+    public static Evento evento2 = new Evento(
         "Code4Future Festival",
         "Um evento interativo com foco em jovens desenvolvedores, que inclui maratonas de programação (hackathons), oficinas de robótica, e palestras sobre desenvolvimento sustentável com tecnologia.",
         "22/09/2025",
         "24/09/2025"
     );
 
-    public Evento evento3 = new Evento(
+    public static Evento evento3 = new Evento(
         "CyberSec Week Brasil",
         "Semana temática dedicada à cibersegurança, com debates, workshops e simulações de ataques cibernéticos, voltada para profissionais da área de TI e segurança digital.",
         "03/11/2025",
         "07/11/2025"
     );
 
-    public Evento evento4 = new Evento(
+    public static Evento evento4 = new Evento(
         "ExpoRealidade+ 2025",
         "Feira nacional de tecnologias imersivas como realidade aumentada (AR), realidade virtual (VR) e realidade mista (MR), com demonstrações e experiências práticas.",
         "12/10/2025",
         "15/10/2025"
     );
 
-    public Evento evento5 = new Evento(
+    public static Evento evento5 = new Evento(
         "Women in Tech Rising",
         "Conferência voltada à inclusão e valorização das mulheres no setor de tecnologia, com painéis de lideranças femininas, programas de mentoria e feiras de oportunidades.",
         "05/12/2025",
@@ -75,6 +74,7 @@ public class TelaInicial extends Application {
     public void start(Stage primaryStage) {
 
         // Adiciona eventos à lista de eventos
+        eventos.limpar();
         eventos.anexar(evento1);
         eventos.anexar(evento2);
         eventos.anexar(evento3);
@@ -96,13 +96,6 @@ public class TelaInicial extends Application {
         HBox logoBox = new HBox(10, logoView, appName);
         logoBox.setAlignment(Pos.CENTER_LEFT);
 
-
-        TextField searchField = new TextField();
-        searchField.setPromptText("Pesquisar palestras");
-        searchField.setPrefWidth(250);
-
-        Button searchButton = new Button("🔍");
-
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
@@ -114,10 +107,11 @@ public class TelaInicial extends Application {
         });
 
         Button registerButton = new Button("Cadastre-se");
-        topBar.getChildren().addAll(logoBox, searchField, searchButton, spacer, registerButton, loginButton);
+        registerButton.setStyle("-fx-background-color: linear-gradient(to right, #667eea, #764ba2); -fx-text-fill: white;");
         registerButton.setOnAction(e -> {Scene cadastroScene = CadastroParticipanteScene.cadastroScene(primaryStage);
         primaryStage.setScene(cadastroScene);});
-
+        topBar.getChildren().addAll(logoBox, spacer, registerButton, loginButton);
+        
         // Título
         VBox titleBox = new VBox(10);
         Label title = new Label("Descubra e se inscreva nos");
@@ -157,7 +151,7 @@ public class TelaInicial extends Application {
             card.setStyle("-fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-background-radius: 8;");
             card.setPrefWidth(200);
 
-            Image image = new Image(getClass().getResourceAsStream("/imagensApp/evento"+(i+1)+".png")); 
+            Image image = new Image(getClass().getResourceAsStream("/imagensApp/" + ((Evento) eventos.selecionar(i)).getId() + ".png")); 
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(180);
             imageView.setFitHeight(100);
@@ -192,7 +186,7 @@ public class TelaInicial extends Application {
 
 
         VBox root = new VBox(10);
-        root.getChildren().addAll(topBar, titleBox, new Label("Próximos eventos"), eventGrid);
+        root.getChildren().addAll(topBar, titleBox, eventGrid);
 
         Scene scene = new Scene(root, 1000, 600);
         primaryStage.setTitle("EventFlow");
@@ -205,9 +199,9 @@ public class TelaInicial extends Application {
     }
 
     public static Scene criarTelaInicial(Stage stage) {
-    TelaInicial tela = new TelaInicial();
-    tela.primaryStage = stage;
-    tela.start(stage); 
-    return stage.getScene();
-}
+        TelaInicial tela = new TelaInicial();
+        tela.primaryStage = stage;
+        tela.start(stage); 
+        return stage.getScene();
+    }
 }
