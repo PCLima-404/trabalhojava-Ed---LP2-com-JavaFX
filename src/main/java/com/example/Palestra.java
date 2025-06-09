@@ -1,5 +1,7 @@
 package com.example;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,7 +24,8 @@ import java.time.format.DateTimeFormatter;
  * @version 1.0
  */
 public class Palestra {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+    DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static int contadorIds = 0;
     private String id;
     private String titulo;
@@ -30,6 +33,7 @@ public class Palestra {
     private LocalTime horario;
     private LocalTime horarioInicio;
     private LocalTime horarioFinal;
+    private LocalDate data;
     private int duracao;
     private String local;
     private String palestrante;
@@ -50,24 +54,51 @@ public class Palestra {
     /**
      * Construtor da palestra.
      *
-     * @param id                  Identificador da palestra.
      * @param titulo              Título da palestra.
      * @param descricao           Descrição da palestra.
      * @param horarioInicio       Início da palestra.
      * @param horarioFinal        Fim da palestra.
-     * @param duracao             Duração em minutos.
+     * @param data                Data da palestra
      * @param local               Local onde será realizada.
      * @param palestrante         Nome do palestrante.
      * @param limiteParticipantes Número máximo de participantes.
      */
-    public Palestra(String titulo, String descricao, String horarioInicio, String horarioFinal,
-            int duracao, String local, String palestrante, int limiteParticipantes) {
+    public Palestra(String titulo, String descricao, String horarioInicio, String horarioFinal, LocalDate data,
+                     String local, String palestrante, int limiteParticipantes) {
         this.id = "PL" + contadorIds++;
         this.titulo = titulo;
         this.descricao = descricao;
-        this.horarioInicio = LocalTime.parse(horarioInicio, formatter);
-        this.horarioFinal = LocalTime.parse(horarioFinal, formatter);
-        this.duracao = duracao;
+        this.horarioInicio = LocalTime.parse(horarioInicio, formatterHora);
+        this.horarioFinal = LocalTime.parse(horarioFinal, formatterHora);
+        this.duracao = (int) (Duration.between(this.horarioInicio, this.horarioFinal)).toMinutes();
+        this.data = data;
+        this.local = local;
+        this.palestrante = palestrante;
+        this.limiteParticipantes = limiteParticipantes;
+        this.participantes = new Lista(limiteParticipantes);
+        this.filaEspera = new Fila(50);
+    }
+
+     /** Construtor da palestra com String para data.
+     *
+     * @param titulo              Título da palestra.
+     * @param descricao           Descrição da palestra.
+     * @param horarioInicio       Início da palestra.
+     * @param horarioFinal        Fim da palestra.
+     * @param data                Data da palestra no formato de String.
+     * @param local               Local onde será realizada.
+     * @param palestrante         Nome do palestrante.
+     * @param limiteParticipantes Número máximo de participantes.
+     */
+    public Palestra(String titulo, String descricao, String horarioInicio, String horarioFinal, String data,
+                     String local, String palestrante, int limiteParticipantes) {
+        this.id = "PL" + contadorIds++;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.horarioInicio = LocalTime.parse(horarioInicio, formatterHora);
+        this.horarioFinal = LocalTime.parse(horarioFinal, formatterHora);
+        this.duracao = (int) (Duration.between(this.horarioInicio, this.horarioFinal)).toMinutes();
+        this.data = LocalDate.parse(data, formatterData);
         this.local = local;
         this.palestrante = palestrante;
         this.limiteParticipantes = limiteParticipantes;
@@ -117,7 +148,7 @@ public class Palestra {
                     String mensagem = "Sua inscrição na palestra '" + titulo + "' foi confirmada.\n" +
                             "Descrição: " + descricao + "\n" +
                             "Local: " + local + "\n" +
-                            "Horário: " + horario.toString();
+                            "Horário: " + horarioInicio.toString();
                     proximo.receberNotificacao(mensagem);
                 }
                 return true;
@@ -211,7 +242,7 @@ public class Palestra {
     public String exibirDetalhes() {
         return "Título: " + titulo + "\n" +
                 "Descrição: " + descricao + "\n" +
-                "Horário: " + horario + "\n" +
+                "Horário: " + horarioInicio + "\n" +
                 "Duração: " + duracao + " minutos\n" +
                 "Local: " + local + "\n" +
                 "Palestrante: " + palestrante + "\n" +
@@ -259,6 +290,10 @@ public class Palestra {
 
     public int getLimiteParticipantes() {
         return limiteParticipantes;
+    }
+
+    public LocalDate getData() {
+        return data;
     }
 
     /**
