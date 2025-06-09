@@ -86,8 +86,8 @@ public class CadastroParticipanteScene {
                 emailErroLabel.setVisible(false);
                 participanteCadastrado = new Participante(nome, email);
                 participantes.anexar(participanteCadastrado);
-                Scene scene = MenuScene.menuScene(stage, nome);
-                stage.setScene(scene);
+                Scene menuScene = MenuScene.menuScene(stage, nome + "\nID: " + participanteCadastrado.getId());
+                stage.setScene(menuScene);
             }
             
         });
