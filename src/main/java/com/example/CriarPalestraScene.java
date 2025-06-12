@@ -118,7 +118,7 @@ public class CriarPalestraScene {
         btnSalvar.setOnAction(e -> {
             try {
                 int id = Integer.parseInt(idEvento.getText().substring(2));
-                Evento evento = (Evento) TelaInicial.eventos.buscar(id);
+                Evento evento = (Evento) TelaInicial.eventos.selecionar(id);
                 if (evento == null) {
                     pltErroLabel.setText("Evento não encontrado!");
                     pltErroLabel.setVisible(true);

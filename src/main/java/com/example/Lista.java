@@ -201,18 +201,5 @@ public class Lista {
         return tamanho;
     }
 
-    /**
-     * Retorna o elemento na posição especificada.
-     * 
-     * @param indice a posição a ser acessada.
-     * @return o objeto naquela posição.
-     * @throws IndexOutOfBoundsException se a posição for inválida.
-     */
-    public Object buscar(int indice) {
-        if (indice < 0 || indice >= tamanho) {
-            throw new IndexOutOfBoundsException("Índice fora do limite da lista.");
-        }
-        return elementos[indice];
-    }
 
 }

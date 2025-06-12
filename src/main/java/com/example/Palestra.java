@@ -189,18 +189,22 @@ public class Palestra {
     /**
      * Altera o horário da palestra e notifica os participantes.
      *
-     * @param novoHorario Novo horário.
+     * @param novoHorarioInicio Novo horário inicial
+     * @param novoHorarioFim Novo horario final.
      * @return true se alterado, false se inválido.
      */
-    public boolean alterarHorario(LocalTime novoHorario) {
-        if (novoHorario == null || novoHorario.isBefore(LocalTime.now())) {
+    public boolean alterarHorario(LocalTime novoHorarioInicio, LocalTime novoHorarioFim) {
+        if ((novoHorarioInicio == null) || (novoHorarioInicio.isBefore(LocalTime.now().plusMinutes(30))) ||
+        (novoHorarioFim == null) || (novoHorarioFim.isBefore(LocalTime.now().plusMinutes(30)))){
             return false;
         }
 
-        this.horario = novoHorario;
+        this.horarioInicio = novoHorarioInicio;
+        this.horarioFinal = novoHorarioFim;
         notificarParticipantes("O horário da palestra foi alterado:\n" +
                 "Título: " + titulo + "\n" +
-                "Novo Horário: " + novoHorario.toString() + "\n" +
+                "Novo Horário Inicio: " + novoHorarioInicio + "\n" +
+                "Novo Horário Fim: " + novoHorarioFim + "\n" +
                 "Descrição: " + descricao);
         return true;
     }
@@ -228,10 +232,10 @@ public class Palestra {
      * @return true se houver conflito, false caso contrário.
      */
     public boolean verificarConflitoHorario(Palestra outra) {
-        LocalTime fimEsta = this.horario.plusMinutes(this.duracao);
-        LocalTime fimOutra = outra.getHorario().plusMinutes(outra.getDuracao());
+        LocalTime fimEsta = this.horarioFinal;
+        LocalTime inicioOutra = outra.getHorarioInicio();
 
-        return this.horario.isBefore(fimOutra) && fimEsta.isAfter(outra.getHorario());
+        return fimEsta.plusMinutes(1).isAfter(inicioOutra);
     }
 
     /**

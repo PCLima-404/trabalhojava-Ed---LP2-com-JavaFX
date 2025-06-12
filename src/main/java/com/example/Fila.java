@@ -1,6 +1,5 @@
 /**
  * Classe que representa uma fila circular de objetos.
- * 
  * Essa implementação utiliza um vetor com índice circular para enfileirar e desenfileirar
  * elementos.
  * 
@@ -71,7 +70,7 @@ public class Fila {
      * @param dado Novo dado a ser inserido na posição inicial.
      * @throws IllegalStateException se a fila estiver vazia.
      */
-    public void atualizarlnicio(Object dado) {
+    public void atualizarInicio(Object dado) {
         if (estaVazia()) {
             throw new IllegalStateException("Fila vazia");
         }
