@@ -15,26 +15,49 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * Gerencia a cena do menu principal da aplicação.
+ * Exibe atalhos para outras funcionalidades e uma lista de eventos disponíveis para inscrição.
+ *
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * @version 1.1
+ * @since 2025-05-25
+ */
 public class MenuScene {
 
+    /**
+     * Cria e retorna a cena do menu principal.
+     * Inclui a barra superior de navegação, atalhos para "Minhas Inscrições" e "Criar Palestras",
+     * e uma lista rolável de eventos com opção de inscrição.
+     *
+     * @param stage O palco principal da aplicação.
+     * @param nomeUsuario O nome do usuário logado.
+     * @return A cena do menu configurada.
+     */
     public static Scene menuScene(Stage stage, String nomeUsuario) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(20));
         root.setStyle("-fx-background-color: #f5f5f5;");
 
-        // Topo com menu reutilizável
         HBox topMenu = TopoComMenu.createTopBar(stage, nomeUsuario);
         root.setTop(topMenu);
 
-        // Container central
         VBox centro = new VBox(20);
         centro.setPadding(new Insets(20));
         centro.setAlignment(Pos.TOP_CENTER);
 
-        // Atalhos centrais
         HBox atalhos = new HBox(20);
         atalhos.setAlignment(Pos.CENTER);
 
+        // Cria os cartões de atalho para "Minhas Inscrições" e "Criar Palestras"
         atalhos.getChildren().addAll(
             createCard("Minhas\nInscrições", () -> {
                 Scene inscricoes = MinhasInscricoesScene.minhasInscricoesScene(stage, nomeUsuario);
@@ -46,12 +69,11 @@ public class MenuScene {
             })
         );
 
-        // Campo de busca
         Label tituloEventos = new Label("Eventos e palestras");
         tituloEventos.setFont(Font.font("Arial", 18));
         tituloEventos.setTextFill(Color.web("#7a7adb"));
 
-        // Lista de eventos
+        // Cria e popula a lista de eventos
         VBox eventosBox = new VBox(15);
         for (int i = 0; i < TelaInicial.eventos.getTamanho(); i++) {
             Evento evento = (Evento) TelaInicial.eventos.selecionar(i);
@@ -72,6 +94,14 @@ public class MenuScene {
         return new Scene(root, 900, 600);
     }
 
+    /**
+     * Cria um cartão de atalho clicável.
+     * O cartão exibe um texto e executa uma ação ao ser clicado.
+     *
+     * @param texto O texto a ser exibido no cartão.
+     * @param onClick A ação a ser executada ao clicar no cartão.
+     * @return Um VBox configurado como um cartão de atalho.
+     */
     private static VBox createCard(String texto, Runnable onClick) {
         VBox card = new VBox();
         card.setPrefSize(150, 100);
@@ -91,6 +121,17 @@ public class MenuScene {
         return card;
     }
 
+    /**
+     * Cria um cartão de evento para exibição na lista.
+     * Exibe a imagem, título, data, descrição do evento e um botão de inscrição.
+     * Ao clicar no botão, navega para a cena de inscrição do evento.
+     *
+     * @param evento O objeto Evento a ser exibido.
+     * @param imagem O caminho da imagem do evento.
+     * @param stage O palco principal da aplicação.
+     * @param nomeUsuario O nome do usuário logado.
+     * @return Um HBox representando o cartão do evento.
+     */
     private static HBox createEventoCard(Evento evento, String imagem, Stage stage, String nomeUsuario) {
         HBox eventoBox = new HBox(15);
         eventoBox.setPadding(new Insets(10));
@@ -128,7 +169,3 @@ public class MenuScene {
         return eventoBox;
     }
 }
-
-
-
-
