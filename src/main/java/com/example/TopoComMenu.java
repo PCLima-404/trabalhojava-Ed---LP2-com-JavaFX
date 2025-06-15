@@ -11,40 +11,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-/**
- * Cria a barra superior de navegação com logo, menu e nome do usuário.
- * Este componente é reutilizável em diversas cenas da aplicação.
- *
- * @author Grupo 1:
- * Ana Gomes Souza,
- * Arthur Sousa Costa,
- * Eduardo Miranda Berlink Santos,
- * Henrique Rezende Bandeira Chiachio,
- * João Lucas Fonseca Chagas,
- * Marco Antonio Barbosa Pereira,
- * Mary Nicole de Sousa Mendes,
- * Pedro César Padre Lima
- * @version 1.1
- * @since 2025-06-12
- */
 public class TopoComMenu {
 
-    /**
-     * Cria e retorna a barra superior da aplicação com funcionalidades de menu.
-     * Inclui o logo, o nome da aplicação, links de navegação (Eventos, Palestras, Sair, Menu)
-     * e o nome do usuário logado.
-     *
-     * @param stage O palco principal da aplicação para navegação entre cenas.
-     * @param nomeUsuario O nome do usuário a ser exibido.
-     * @return Um HBox configurado como a barra superior.
-     */
     public static HBox createTopBar(Stage stage, String nomeUsuario) {
         HBox topBar = new HBox(50);
         topBar.setPadding(new Insets(20));
         topBar.setStyle("-fx-background-color: #ffffff;");
         topBar.setAlignment(Pos.CENTER_LEFT);
 
-        // Seção do Logo e Nome da Aplicação
+        // Logo e nome
         Image logoImg = new Image(TopoSemMenu.class.getResourceAsStream("/imagemLogo/E.png"));
         ImageView logo = new ImageView(logoImg); 
         logo.setFitHeight(30);
@@ -57,7 +32,7 @@ public class TopoComMenu {
         HBox logoBox = new HBox(10, logo, titulo);
         logoBox.setAlignment(Pos.CENTER_LEFT);
 
-        // Seção de Navegação (links de menu)
+        // Navegação
         HBox nav = new HBox(30);
         nav.setAlignment(Pos.CENTER);
 
@@ -66,7 +41,7 @@ public class TopoComMenu {
         Label sair = new Label("Sair");
         Label menu = new Label("Menu");
 
-        // Estilos para os itens de menu (normal e hover)
+        // Estilo base
         String estiloPadrao = "-fx-cursor: hand; -fx-text-fill: #333;";
         String estiloHover = "-fx-cursor: hand; -fx-text-fill: #3B4EFF;";
 
@@ -80,7 +55,7 @@ public class TopoComMenu {
         sair.setStyle(estiloPadrao);
         menu.setStyle(estiloPadrao);
 
-        // Efeitos visuais ao passar o mouse (hover)
+        // Efeitos de hover
         eventos.setOnMouseEntered(e -> eventos.setStyle(estiloHover));
         eventos.setOnMouseExited(e -> eventos.setStyle(estiloPadrao));
 
@@ -93,7 +68,7 @@ public class TopoComMenu {
         menu.setOnMouseEntered(e -> menu.setStyle(estiloHover));
         menu.setOnMouseExited(e -> menu.setStyle(estiloPadrao));
 
-        // Ações de clique para cada item do menu
+        // Ações de clique
         eventos.setOnMouseClicked(e -> {
             stage.setScene(EventosScene.eventosScene(stage, nomeUsuario));
         });
@@ -110,16 +85,16 @@ public class TopoComMenu {
             stage.setScene(MenuScene.menuScene(stage, nomeUsuario));
         });
 
+
         nav.getChildren().addAll(eventos, palestras, sair, menu);
 
-        // Exibição do nome do usuário
+        // Usuário
         Label usuarioLabel = new Label("Olá, " + nomeUsuario);
         usuarioLabel.setFont(Font.font(14));
 
-        Region espacador = new Region(); // Espaçador para alinhar elementos
-        HBox.setHgrow(espacador, Priority.ALWAYS); // Permite que o espaçador cresça
+        Region espacador = new Region();
+        HBox.setHgrow(espacador, Priority.ALWAYS);
 
-        // Adiciona todos os componentes à barra superior
         topBar.getChildren().addAll(logoBox, nav, espacador, usuarioLabel);
         return topBar;
     }

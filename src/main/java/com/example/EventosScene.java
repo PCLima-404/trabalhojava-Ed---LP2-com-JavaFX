@@ -13,35 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-/**
- * Classe responsável por criar e gerenciar a cena de exibição de eventos.
- * Esta cena apresenta uma lista de eventos cadastrados em formato de tabela,
- * permitindo ao usuário visualizar detalhes de cada evento.
- *
- * @author Grupo 1:
- * Ana Gomes Souza,
- * Arthur Sousa Costa,
- * Eduardo Miranda Berlink Santos,
- * Henrique Rezende Bandeira Chiachio,
- * João Lucas Fonseca Chagas,
- * Marco Antonio Barbosa Pereira,
- * Mary Nicole de Sousa Mendes,
- * Pedro César Padre Lima
- * @version 1.1
- * @since 2025-05-25
- */
 public class EventosScene {
 
-    /**
-     * Cria e retorna a cena de eventos da aplicação.
-     * Esta cena exibe uma lista de eventos em formato de tabela,
-     * com a opção de ver detalhes de cada evento ao clicar no botão "Ver mais".
-     * Inclui um topo com menu de navegação.
-     *
-     * @param stage O Stage principal da aplicação onde esta cena será exibida.
-     * @param nomeUsuario O nome do usuário logado, exibido na barra superior.
-     * @return Uma instância de Scene configurada para exibir a lista de eventos.
-     */
     public static Scene eventosScene(Stage stage, String nomeUsuario) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(20));
@@ -62,10 +35,11 @@ public class EventosScene {
         tabelaEventos.setVgap(15);
         tabelaEventos.setPadding(new Insets(10));
 
-        // Cabeçalho da tabela de eventos
+        // Cabeçalho da tabela
         Label colId = new Label("ID");
         Label colNome = new Label("Nome");
         Label colData = new Label("Data");
+
 
         colId.setStyle("-fx-font-weight: bold;");
         colNome.setStyle("-fx-font-weight: bold;");
@@ -75,12 +49,9 @@ public class EventosScene {
         detalhesBox.setPadding(new Insets(10));
         detalhesBox.setStyle("-fx-background-color: #eeeeee; -fx-background-radius: 10;");
 
-        // Adiciona o cabeçalho à primeira linha da tabela
         tabelaEventos.addRow(0, colId, colNome, colData);
 
         int rowIndex = 1;
-        // Assume que 'TelaInicial.eventos' é uma instância de uma classe de lista/coleção
-        // que contém objetos do tipo 'Evento'.
         Object[] objetos = TelaInicial.eventos.selecionarTodos();
         for (Object objeto : objetos ) {
             Evento evento = (Evento) objeto;
@@ -88,37 +59,32 @@ public class EventosScene {
             Label nome = new Label(evento.getNome());
             Label data = new Label(evento.getDataInicio().toString()+" á "+evento.getDataFim());
 
-            // Botão "Ver mais" para exibir detalhes do evento
+            // Ícones de ação (substituir por imagens reais, se desejar)
             Button btnVer = new Button("Ver mais");
             btnVer.setStyle("-fx-background-color: #7a7adb; -fx-text-fill: white; -fx-background-radius: 10;");
             btnVer.setOnAction(e -> {
-                detalhesBox.getChildren().clear(); // Limpa o conteúdo anterior antes de atualizar
+                detalhesBox.getChildren().clear(); // limpa antes de atualizar
 
                 Label tituloDetalhes = new Label("Detalhes do Evento");
                 tituloDetalhes.setFont(Font.font("Arial", 18));
                 tituloDetalhes.setTextFill(Color.web("#3b3b98"));
 
                 Label desc = new Label(evento.getDescricao());
-                desc.setWrapText(true); // Permite que o texto quebre linhas
+                desc.setWrapText(true);
                 Label dataCompleta = new Label("De " + evento.getDataInicio().toString() + " até " + evento.getDataFim().toString());
 
-                // Adiciona os detalhes do evento à caixa de detalhes
                 detalhesBox.getChildren().addAll(tituloDetalhes, desc, dataCompleta);
             });
 
             HBox botoes = new HBox(10, btnVer);
             botoes.setAlignment(Pos.CENTER_LEFT);
 
-            // Adiciona a linha do evento à tabela
             tabelaEventos.addRow(rowIndex++, id, nome, data, botoes);
         }
 
-        // Adiciona os componentes principais ao VBox de conteúdo
         mainContent.getChildren().addAll(titulo, tabelaEventos, detalhesBox);
-        // Define o conteúdo principal no centro do BorderPane
         root.setCenter(mainContent);
 
-        // Retorna a cena configurada com suas dimensões
         return new Scene(root, 950, 600);
     }
 }

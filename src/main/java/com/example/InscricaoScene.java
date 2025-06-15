@@ -15,45 +15,23 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-/**
- * Gerencia a cena de inscrição em eventos e palestras.
- * Exibe detalhes do evento e permite a inscrição em suas palestras.
- *
- * @author Grupo 1:
- * Ana Gomes Souza,
- * Arthur Sousa Costa,
- * Eduardo Miranda Berlink Santos,
- * Henrique Rezende Bandeira Chiachio,
- * João Lucas Fonseca Chagas,
- * Marco Antonio Barbosa Pereira,
- * Mary Nicole de Sousa Mendes,
- * Pedro César Padre Lima
- * @version 1.1
- * @since 2025-05-25
- */
 public class InscricaoScene {
 
-    /**
-     * Cria a cena de inscrição para um evento.
-     * Inclui cabeçalho, detalhes do evento e uma lista de palestras com botões de inscrição.
-     *
-     * @param stage O palco principal da aplicação.
-     * @param nomeUsuario O nome do usuário logado.
-     * @param evento O evento a ser exibido.
-     * @return A cena de inscrição configurada.
-     */
     public static Scene inscricaoScene(Stage stage, String nomeUsuario, Evento evento) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(20));
         root.setStyle("-fx-background-color: #f5f5f5;");
 
+        // Topo com menu reutilizável
         HBox topMenu = TopoComMenu.createTopBar(stage, nomeUsuario);
         root.setTop(topMenu);
 
+        // Título
         Label titulo = new Label("Inscrição");
         titulo.setFont(Font.font("Arial", 22));
         titulo.setTextFill(Color.web("#333"));
 
+        // Cartão do evento
         HBox cardEvento = new HBox(15);
         cardEvento.setPadding(new Insets(15));
         cardEvento.setStyle("-fx-background-color: white; -fx-background-radius: 15;");
@@ -80,10 +58,12 @@ public class InscricaoScene {
         infos.getChildren().addAll(tituloEvento, descEvento, dataEvento);
         cardEvento.getChildren().addAll(img, infos);
 
+        // Subtítulo
         Label subtitulo = new Label("Confira as palestras do evento");
         subtitulo.setFont(Font.font("Arial", 16));
         subtitulo.setTextFill(Color.web("#7a7adb"));
 
+        // Tabela de palestras
         VBox listaPalestras = new VBox(10);
         for (Palestra palestra : evento.listarPalestras()) {
             listaPalestras.getChildren().add(
@@ -107,18 +87,6 @@ public class InscricaoScene {
         root.setCenter(centerBox);
         return new Scene(root, 900, 600);
     }
-
-    /**
-     * Cria uma linha de exibição para uma palestra.
-     * Inclui nome, palestrante, horário e um botão de inscrição.
-     * A inscrição verifica a disponibilidade e atualiza o estado do botão.
-     *
-     * @param palestra O objeto Palestra.
-     * @param nome O título da palestra.
-     * @param palestrante O nome do palestrante.
-     * @param horario O horário de início e fim.
-     * @return Um HBox representando a linha da palestra.
-     */
     private static HBox createLinhaPalestra(Palestra palestra, String nome, String palestrante, String horario) {
         HBox linha = new HBox(30);
         linha.setPadding(new Insets(10));
@@ -143,13 +111,14 @@ public class InscricaoScene {
                 
                 inscrever.setText("Inscrito");
                 inscrever.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 10;");
-                inscrever.setDisable(true); 
+                inscrever.setDisable(true); // opcional: impede que o usuário clique novamente
             } else {
                 palestra.adicionarFilaEspera(CadastroParticipanteScene.participanteCadastrado);
                 inscrever.setText("Você está na lista de espera");
                 inscrever.setStyle("-fx-background-color:rgb(8, 22, 104); -fx-text-fill: white; -fx-background-radius: 10;");
-                inscrever.setDisable(true); 
+                inscrever.setDisable(true); // opcional: impede que o usuário clique novamente
             }
+        
         });
 
         linha.getChildren().addAll(nomeLabel, palestranteLabel, horarioLabel, inscrever);

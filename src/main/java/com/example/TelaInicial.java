@@ -19,28 +19,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-/**
- * Classe principal da aplicação EventFlow, responsável por iniciar a interface gráfica.
- * Exibe a tela inicial com opções de login, cadastro e uma lista de eventos disponíveis.
- *
- * @author Grupo 1:
- * Ana Gomes Souza,
- * Arthur Sousa Costa,
- * Eduardo Miranda Berlink Santos,
- * Henrique Rezende Bandeira Chiachio,
- * João Lucas Fonseca Chagas,
- * Marco Antonio Barbosa Pereira,
- * Mary Nicole de Sousa Mendes,
- * Pedro César Padre Lima
- * @version 1.1
- * @since 2025-06-12
- */
 public class TelaInicial extends Application {
 
-    /** Lista personalizada para armazenar os eventos disponíveis na aplicação. */
+    /** Lista personalizada para armazenar os eventos */
     public static Lista eventos = new Lista(5);
-
-    // Definição de eventos estáticos para demonstração
     public static Evento evento1 = new Evento(
     "TechNova Summit 2025",
     "Uma conferência internacional voltada para inovações em inteligência artificial, computação quântica e tecnologias emergentes. Reúne pesquisadores, startups e investidores do mundo todo.",
@@ -76,21 +58,22 @@ public class TelaInicial extends Application {
         "06/12/2025"
     );
 
-    /** Formato de data comum utilizado nas interfaces. */
+    /** Formato de data utilizado nas interfaces */
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    /** Referência ao palco principal da aplicação. */
+    /** Referência global á tela principal */
     private Stage primaryStage;
 
+
     /**
-     * Inicializa a interface gráfica da aplicação JavaFX.
-     * Configura a tela inicial com barra superior, título e grid de eventos.
+     * Inicializa a interface gráfica da aplicação.
      *
-     * @param primaryStage O palco (janela) principal da aplicação.
+     * @param primaryStage Janela principal do app.
      */
     @Override
     public void start(Stage primaryStage) {
-        // Popula a lista de eventos (limpa antes para evitar duplicatas em reinícios)
+
+        // Adiciona eventos à lista de eventos
         eventos.limpar();
         eventos.anexar(evento1);
         eventos.anexar(evento2);
@@ -98,9 +81,8 @@ public class TelaInicial extends Application {
         eventos.anexar(evento4);
         eventos.anexar(evento5);
 
+        // Top bar: logo, search, login
         this.primaryStage = primaryStage;
-
-        // Cria a barra superior (top bar) com logo, nome da aplicação e botões de ação
         HBox topBar = new HBox(20);
         Image logoImage = new Image(getClass().getResourceAsStream("/imagemLogo/E.png"));
         ImageView logoView = new ImageView(logoImage);
@@ -114,25 +96,23 @@ public class TelaInicial extends Application {
         HBox logoBox = new HBox(10, logoView, appName);
         logoBox.setAlignment(Pos.CENTER_LEFT);
 
-        Region spacer = new Region(); // Espaçador para empurrar botões para a direita
+        Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         Button loginButton = new Button("Login");
         loginButton.setStyle("-fx-background-color: linear-gradient(to right, #667eea, #764ba2); -fx-text-fill: white;");
         loginButton.setOnAction(e -> {
-            Scene loginScene = LoginScene.loginScene(primaryStage);
-            primaryStage.setScene(loginScene);
+        Scene loginScene = LoginScene.loginScene(primaryStage);
+        primaryStage.setScene(loginScene);
         });
 
         Button registerButton = new Button("Cadastre-se");
         registerButton.setStyle("-fx-background-color: linear-gradient(to right, #667eea, #764ba2); -fx-text-fill: white;");
-        registerButton.setOnAction(e -> {
-            Scene cadastroScene = CadastroParticipanteScene.cadastroScene(primaryStage);
-            primaryStage.setScene(cadastroScene);
-        });
+        registerButton.setOnAction(e -> {Scene cadastroScene = CadastroParticipanteScene.cadastroScene(primaryStage);
+        primaryStage.setScene(cadastroScene);});
         topBar.getChildren().addAll(logoBox, spacer, registerButton, loginButton);
         
-        // Cria o título e subtítulo da página inicial
+        // Título
         VBox titleBox = new VBox(10);
         Label title = new Label("Descubra e se inscreva nos");
         title.setFont(Font.font("Arial", 28));
@@ -142,13 +122,12 @@ public class TelaInicial extends Application {
         titleBox.getChildren().addAll(title, subtitle);
         titleBox.setPadding(new Insets(10));
 
-        // Cria um grid para exibir os cards de eventos
+        // Grid de eventos
         GridPane eventGrid = new GridPane();
         eventGrid.setPadding(new Insets(20));
         eventGrid.setHgap(20);
         eventGrid.setVgap(20);
 
-        // Arrays com informações dos eventos para popular os cards
         String[] eventTitles = {
            evento1.getNome(),
            evento2.getNome(),
@@ -165,7 +144,6 @@ public class TelaInicial extends Application {
             evento5.getDescricao()
         };
 
-        // Loop para criar e adicionar os cards de evento ao grid
         for (int i = 0; i < eventTitles.length; i++) {
             VBox card = new VBox(10);
             card.setPadding(new Insets(10));
@@ -173,7 +151,6 @@ public class TelaInicial extends Application {
             card.setStyle("-fx-background-color: #f0f0f0; -fx-border-radius: 8; -fx-background-radius: 8;");
             card.setPrefWidth(200);
 
-            // Carrega e exibe a imagem do evento
             Image image = new Image(getClass().getResourceAsStream("/imagensApp/" + ((Evento) eventos.selecionar(i)).getId() + ".png")); 
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(180);
@@ -190,13 +167,13 @@ public class TelaInicial extends Application {
             Button detailsButton = new Button("Saiba mais");
             detailsButton.setStyle("-fx-background-color: #667eea; -fx-text-fill: white;");
             
-            // Descrição do evento, inicialmente escondida
+            // Descrição escondida inicialmente
             Label descriptionLabel = new Label(eventDescriptions[i]);
             descriptionLabel.setWrapText(true);
             descriptionLabel.setVisible(false);
-            descriptionLabel.setManaged(false); // Importante para o layout não reservar espaço quando invisível
+            descriptionLabel.setManaged(false); // importante para o layout funcionar corretamente
 
-            // Ação do botão "Saiba mais": alterna a visibilidade da descrição
+            // Ao clicar no botão, mostra/oculta a descrição
             detailsButton.setOnAction(e -> {
                 boolean invisivel = descriptionLabel.isVisible();
                 descriptionLabel.setVisible(!invisivel);
@@ -204,10 +181,10 @@ public class TelaInicial extends Application {
             });
 
             card.getChildren().addAll(imageView, eventLabel, detailsButton, descriptionLabel);
-            eventGrid.add(card, i, 0); // Adiciona o card ao grid na linha 0, coluna i
+            eventGrid.add(card, i, 0);
         }
 
-        // Configura o layout raiz da cena
+
         VBox root = new VBox(10);
         root.getChildren().addAll(topBar, titleBox, eventGrid);
 
@@ -217,26 +194,14 @@ public class TelaInicial extends Application {
         primaryStage.show();
     }
 
-    /**
-     * Método principal para iniciar a aplicação JavaFX.
-     *
-     * @param args Argumentos de linha de comando.
-     */
     public static void main(String[] args) {
         launch(args);
     }
 
-    /**
-     * Cria e retorna a cena da tela inicial.
-     * Este método é útil para navegar de outras partes da aplicação de volta para a tela inicial.
-     *
-     * @param stage O palco principal da aplicação.
-     * @return A cena da tela inicial já configurada no palco.
-     */
     public static Scene criarTelaInicial(Stage stage) {
         TelaInicial tela = new TelaInicial();
-        tela.primaryStage = stage; // Garante que a instância 'tela' utilize o stage correto
-        tela.start(stage); // Re-executa o método start para configurar a cena
-        return stage.getScene(); // Retorna a cena que foi definida no stage
+        tela.primaryStage = stage;
+        tela.start(stage); 
+        return stage.getScene();
     }
 }
