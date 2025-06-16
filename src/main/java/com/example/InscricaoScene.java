@@ -14,9 +14,32 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/**
+ * Gerencia a cena de inscrição em eventos e palestras.
+ * Exibe detalhes do evento e permite a inscrição em suas palestras.
+ *
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * @version 1.1
+ * @since 2025-05-25
+ */
 public class InscricaoScene {
-
+    /**
+     * Cria a cena de inscrição para um evento.
+     * Inclui cabeçalho, detalhes do evento e uma lista de palestras com botões de inscrição.
+     *
+     * @param stage O palco principal da aplicação.
+     * @param nomeUsuario O nome do usuário logado.
+     * @param evento O evento a ser exibido.
+     * @return A cena de inscrição configurada.
+     */
     public static Scene inscricaoScene(Stage stage, String nomeUsuario, Evento evento) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(20));
@@ -87,6 +110,18 @@ public class InscricaoScene {
         root.setCenter(centerBox);
         return new Scene(root, 900, 600);
     }
+
+    /**
+     * Cria uma linha de exibição para uma palestra.
+     * Inclui nome, palestrante, horário e um botão de inscrição.
+     * A inscrição verifica a disponibilidade e atualiza o estado do botão.
+     *
+     * @param palestra O objeto Palestra.
+     * @param nome O título da palestra.
+     * @param palestrante O nome do palestrante.
+     * @param horario O horário de início e fim.
+     * @return Um HBox representando a linha da palestra.
+     */
     private static HBox createLinhaPalestra(Palestra palestra, String nome, String palestrante, String horario) {
         HBox linha = new HBox(30);
         linha.setPadding(new Insets(10));

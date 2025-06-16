@@ -18,7 +18,22 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/**
+ * Classe principal da aplicação EventFlow, responsável por iniciar a interface gráfica.
+ * Exibe a tela inicial com opções de login, cadastro e uma lista de eventos disponíveis.
+ *
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * @version 1.1
+ * @since 2025-06-12
+ */
 public class TelaInicial extends Application {
 
     /** Lista personalizada para armazenar os eventos */
@@ -194,10 +209,22 @@ public class TelaInicial extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Método principal para iniciar a aplicação JavaFX.
+     *
+     * @param args Argumentos de linha de comando.
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Cria e retorna a cena da tela inicial.
+     * Este método é útil para navegar de outras partes da aplicação de volta para a tela inicial.
+     *
+     * @param stage O palco principal da aplicação.
+     * @return A cena da tela inicial já configurada no palco.
+     */
     public static Scene criarTelaInicial(Stage stage) {
         TelaInicial tela = new TelaInicial();
         tela.primaryStage = stage;

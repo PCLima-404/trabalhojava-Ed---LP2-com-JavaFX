@@ -18,10 +18,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * Gerencia a cena para criação e cadastro de novas palestras.
+ * Permite ao usuário inserir detalhes da palestra e associá-la a um evento existente.
+ * Realiza validação de dados e verifica conflitos de horário/local.
+ *
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * @version 1.1
+ * @since 2025-06-12
+ */
 public class CriarPalestraScene {
-    /** Formato de data utilizado nas interfaces */
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+    /** Palestra que será cadastrada */
     public static Palestra palestraCadastrada;
 
     /**
@@ -29,7 +45,7 @@ public class CriarPalestraScene {
      * 
      * @param stage Tela em que a cena será exibida.
      * @param nomeUsuario Nome do usuário no momento em que a cena é chamada.
-     * @return Scene Cena de cadastro de palestra.
+     * @return Cena de cadastro de palestra.
      */
     public static Scene criarPalestraScene(Stage stage, String nomeUsuario) {
         BorderPane root = new BorderPane();
@@ -156,6 +172,13 @@ public class CriarPalestraScene {
         return new Scene(root, 950, 650);
     }
 
+    /**
+     * Método cria campos de texto com espaço para input
+     *
+     * @param labelTexto Texto indicando função do campo
+     * @param campo Campo que permite que usuário digite informações
+     * @return caixa de vertical com o campo de texto para preenchimento
+     */
     private static VBox criarLabelComCampo(String labelTexto, Control campo) {
         Label label = new Label(labelTexto);
         label.setStyle("-fx-text-fill: #5f5f5f; -fx-font-weight: bold;");

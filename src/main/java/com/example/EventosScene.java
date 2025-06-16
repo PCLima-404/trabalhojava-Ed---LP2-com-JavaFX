@@ -12,9 +12,34 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/**
+ * Classe responsável por criar e gerenciar a cena de exibição de eventos.
+ * Esta cena apresenta uma lista de eventos cadastrados em formato de tabela,
+ * permitindo ao usuário visualizar detalhes de cada evento.
+ *
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * @version 1.1
+ * @since 2025-05-25
+ */
 public class EventosScene {
-
+    /**
+     * Cria e retorna a cena de eventos da aplicação.
+     * Esta cena exibe uma lista de eventos em formato de tabela,
+     * com a opção de ver detalhes de cada evento ao clicar no botão "Ver mais".
+     * Inclui um topo com menu de navegação.
+     *
+     * @param stage O Stage principal da aplicação onde esta cena será exibida.
+     * @param nomeUsuario O nome do usuário logado, exibido na barra superior.
+     * @return Uma instância de Scene configurada para exibir a lista de eventos.
+     */
     public static Scene eventosScene(Stage stage, String nomeUsuario) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(20));

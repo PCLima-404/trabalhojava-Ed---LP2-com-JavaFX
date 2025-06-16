@@ -10,9 +10,33 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/**
+ * Cria a barra superior de navegação com logo, menu e nome do usuário.
+ * Este componente é reutilizável em diversas cenas da aplicação.
+ *
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * @version 1.1
+ * @since 2025-06-12
+ */
 public class TopoComMenu {
 
+    /**
+     * Cria e retorna a barra superior da aplicação com funcionalidades de menu.
+     * Inclui o logo, o nome da aplicação, links de navegação (Eventos, Palestras, Sair, Menu)
+     * e o nome do usuário logado.
+     *
+     * @param stage O palco principal da aplicação para navegação entre cenas.
+     * @param nomeUsuario O nome do usuário a ser exibido.
+     * @return Um HBox configurado como a barra superior.
+     */
     public static HBox createTopBar(Stage stage, String nomeUsuario) {
         HBox topBar = new HBox(50);
         topBar.setPadding(new Insets(20));
@@ -95,6 +119,7 @@ public class TopoComMenu {
         Region espacador = new Region();
         HBox.setHgrow(espacador, Priority.ALWAYS);
 
+        // Adiciona todos os componentes à barra superior
         topBar.getChildren().addAll(logoBox, nav, espacador, usuarioLabel);
         return topBar;
     }

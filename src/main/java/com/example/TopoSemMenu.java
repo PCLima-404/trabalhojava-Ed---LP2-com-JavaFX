@@ -11,8 +11,32 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/**
+ * Cria a barra superior de navegação simplificada, sem opções de menu.
+ * Este componente é reutilizável em cenas onde a navegação completa não é necessária.
+ *
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * @version 1.1
+ * @since 2025-06-12
+ */
 public class TopoSemMenu {
+
+    /**Add commentMore actions
+     * Cria e retorna a barra superior da aplicação sem links de menu.
+     * Inclui o logo, o nome da aplicação e uma saudação ao usuário.
+     *
+     * @param stage O palco principal da aplicação (não usado para navegação nesta versão).
+     * @param nomeUsuario O nome do usuário a ser exibido.
+     * @return Um HBox configurado como a barra superior sem menu.
+     */
     public static HBox createTopBar(Stage stage, String nomeUsuario) {
         HBox topBar = new HBox(50);
         topBar.setPadding(new Insets(20));

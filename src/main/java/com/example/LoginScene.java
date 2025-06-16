@@ -13,9 +13,33 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/**
+ * Gerencia a cena de login da aplicação.
+ * Permite que o usuário insira suas credenciais (e-mail e ID) para acessar o sistema,
+ * validando-as contra a lista de participantes cadastrados.
+ *
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * @version 1.1
+ * @since 2025-05-25
+ */
 public class LoginScene {
 
+    /**
+     * Cria e retorna a cena de login da aplicação.
+     * Configura a interface com campos para e-mail e ID, um botão de login
+     * e exibe mensagens de erro em caso de credenciais inválidas.
+     *
+     * @param stage O palco principal da aplicação.
+     * @return A cena de login configurada.
+     */
     public static Scene loginScene(Stage stage) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(20));

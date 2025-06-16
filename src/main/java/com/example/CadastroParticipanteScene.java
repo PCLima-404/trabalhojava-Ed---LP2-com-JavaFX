@@ -12,7 +12,23 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/**
+ * Classe responsável pela cena de cadastro de participantes.Add commentMore actions
+ * Esta classe fornece uma interface gráfica para cadastrar novos participantes,
+ * com validação de e-mail único e armazenamento na lista de participantes.
+ *
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * * @version 1.1
+ * @since 2025-05-25
+ */
 public class CadastroParticipanteScene {
     
     /** Variável para participante usuário */
@@ -21,7 +37,15 @@ public class CadastroParticipanteScene {
     /** Lista de participantes */
     public static Lista participantes = new Lista(20);
 
-
+    /**Add commentMore actions
+     * Cria e configura a cena principal para o cadastro de um novo participante.
+     * Este método inicializa o layout base, configura a barra superior e o conteúdo central
+     * que inclui o formulário de cadastro e os botões de ação.
+     *
+     * @param stage O Stage principal da aplicação JavaFX onde a cena será exibida.
+     * @return Uma instância de Scene configurada e pronta para ser exibida,
+     * representando a interface de cadastro de participantes.
+     */
     public static Scene cadastroScene(Stage stage) {
 
         BorderPane root = new BorderPane();

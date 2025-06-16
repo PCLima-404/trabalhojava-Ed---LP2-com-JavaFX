@@ -13,9 +13,34 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/**
+ * Gerencia a cena de visualização e gerenciamento de palestras.
+ * Exibe uma lista de todas as palestras cadastradas, com opções para ver detalhes e excluir.
+ *
+ * @author Grupo 1:
+ * Ana Gomes Souza,
+ * Arthur Sousa Costa,
+ * Eduardo Miranda Berlink Santos,
+ * Henrique Rezende Bandeira Chiachio,
+ * João Lucas Fonseca Chagas,
+ * Marco Antonio Barbosa Pereira,
+ * Mary Nicole de Sousa Mendes,
+ * Pedro César Padre Lima
+ * @version 1.1
+ * @since 2025-05-25
+ */
 public class PalestrasScene {
 
+    /**Add commentMore actions
+     * Cria e retorna a cena de palestras.
+     * Inclui a barra superior de navegação, um título, uma tabela de palestras
+     * com seus detalhes (ID, nome, data, evento associado), e botões de ação
+     * para visualizar mais informações ou excluir a palestra.
+     *
+     * @param stage O palco principal da aplicação.
+     * @param nomeUsuario O nome do usuário logado.
+     * @return A cena de palestras configurada.
+     */
     public static Scene palestrasScene(Stage stage, String nomeUsuario) {
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(20));
