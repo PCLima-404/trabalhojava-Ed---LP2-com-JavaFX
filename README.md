@@ -5,7 +5,7 @@ Semestre: 2025.1 (Terceiro Período)
 Grupo 1
 
 📝 Descrição do Projeto
-O EventSync é um sistema desenvolvido para gerenciar palestras em eventos acadêmicos e corporativos. Com foco em organização e eficiência, o aplicativo permite:
+é um sistema desenvolvido para gerenciar palestras em eventos acadêmicos e corporativos. Com foco em organização e eficiência, o aplicativo permite:
 
 🗓 Agendamento inteligente de palestras (evitando conflitos de horário e local).
 
