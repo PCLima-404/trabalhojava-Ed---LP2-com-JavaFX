@@ -1,3 +1,5 @@
+package com_2;
+
 import com.example.Palestra;
 import com.example.Participante;
 import org.junit.Before;
@@ -7,20 +9,19 @@ import java.time.LocalTime;
 
 import static org.junit.Assert.*;
 
-
 /**
  * Classe que contem testes unitarios para monitoramento das funções da classe
  * Palestra
  *
  * @author Grupo 1:
- * Ana Gomes Souza,
- * Arthur Sousa Costa,
- * Eduardo Miranda Berlink Santos,
- * Henrique Rezende Bandeira Chiachio,
- * João Lucas Fonseca Chagas,
- * Marco Antonio Barbosa Pereira,
- * Mary Nicole de Sousa Mendes,
- * Pedro César Padre Lima
+ *         Ana Gomes Souza,
+ *         Arthur Sousa Costa,
+ *         Eduardo Miranda Berlink Santos,
+ *         Henrique Rezende Bandeira Chiachio,
+ *         João Lucas Fonseca Chagas,
+ *         Marco Antonio Barbosa Pereira,
+ *         Mary Nicole de Sousa Mendes,
+ *         Pedro César Padre Lima
  * @since 08-05-2025
  * @version 1.0
  */
@@ -88,7 +89,5 @@ public class PalestraTest {
 
         assertTrue(palestraTeste1.alterarHorario(novoHorarioinicio, novoHorarioFim));
     }
-
-
 
 }

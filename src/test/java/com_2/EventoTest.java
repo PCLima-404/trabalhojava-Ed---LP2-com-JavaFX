@@ -1,3 +1,5 @@
+package com_2;
+
 import com.example.Evento;
 import com.example.Palestra;
 import org.junit.Before;
@@ -10,15 +12,16 @@ import java.time.format.DateTimeFormatter;
 /**
  * Classe que contem testes unitarios para monitoramento das funções da classe
  * Evento
+ * 
  * @author Grupo 1:
- * Ana Gomes Souza,
- * Arthur Sousa Costa,
- * Eduardo Miranda Berlink Santos,
- * Henrique Rezende Bandeira Chiachio,
- * João Lucas Fonseca Chagas,
- * Marco Antonio Barbosa Pereira,
- * Mary Nicole de Sousa Mendes,
- * Pedro César Padre Lima
+ *         Ana Gomes Souza,
+ *         Arthur Sousa Costa,
+ *         Eduardo Miranda Berlink Santos,
+ *         Henrique Rezende Bandeira Chiachio,
+ *         João Lucas Fonseca Chagas,
+ *         Marco Antonio Barbosa Pereira,
+ *         Mary Nicole de Sousa Mendes,
+ *         Pedro César Padre Lima
  * @since 08-05-2025
  * @version 1.0
  */
@@ -32,7 +35,7 @@ public class EventoTest {
      * Execução antes de cada teste
      */
     @Before
-    public void setUp(){
+    public void setUp() {
         LocalDate inicio = LocalDate.of(2025, 1, 1);
         LocalDate fim = inicio.plusDays(1);
         eventoTeste = new Evento("T1", "EVENTO TESTE", inicio, fim);

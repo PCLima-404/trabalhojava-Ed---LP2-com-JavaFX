@@ -1,3 +1,5 @@
+package com_2;
+
 import com.example.Palestra;
 import com.example.Participante;
 import org.junit.Before;
@@ -10,14 +12,14 @@ import java.time.LocalDate;
  * Participante
  *
  * @author Grupo 1:
- * Ana Gomes Souza,
- * Arthur Sousa Costa,
- * Eduardo Miranda Berlink Santos,
- * Henrique Rezende Bandeira Chiachio,
- * João Lucas Fonseca Chagas,
- * Marco Antonio Barbosa Pereira,
- * Mary Nicole de Sousa Mendes,
- * Pedro César Padre Lima
+ *         Ana Gomes Souza,
+ *         Arthur Sousa Costa,
+ *         Eduardo Miranda Berlink Santos,
+ *         Henrique Rezende Bandeira Chiachio,
+ *         João Lucas Fonseca Chagas,
+ *         Marco Antonio Barbosa Pereira,
+ *         Mary Nicole de Sousa Mendes,
+ *         Pedro César Padre Lima
  * @since 08-05-2025
  * @version 1.0
  */
@@ -71,7 +73,7 @@ public class ParticipanteTest {
      * Assegura que não possa cancelar inscrição de palestra não inscrita
      */
     @Test
-    public void testCancelarInscricao(){
+    public void testCancelarInscricao() {
         assertFalse(participante1.cancelarInscricao(palestra1));
         assertFalse(participante1.cancelarInscricao(palestraNula));
 
@@ -96,12 +98,12 @@ public class ParticipanteTest {
         assertFalse(participante1.removerPalestra(palestraNula));
         assertFalse(participante1.removerPalestra(palestra2));
 
-   }
+    }
 
     /**
      * Testa o metodo de listar todas a palestras inscritas do participante
      */
-   @Test
+    @Test
     public void testListarPalestrasInscritas() {
         Palestra[] criterio = new Palestra[2];
         criterio[0] = palestra1;
@@ -110,9 +112,6 @@ public class ParticipanteTest {
         participante1.inscreverEmPalestra(palestra1);
         participante1.inscreverEmPalestra(palestra2);
         assertEquals(criterio, participante1.listarPalestrasInscritas());
-   }
-
-
-
+    }
 
 }

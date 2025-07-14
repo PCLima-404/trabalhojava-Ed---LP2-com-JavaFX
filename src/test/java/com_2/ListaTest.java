@@ -1,20 +1,24 @@
+package com_2;
+
 import com.example.Lista;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Classe que contem testes unitarios para monitoramento das funções da estrutura de dados
+ * Classe que contem testes unitarios para monitoramento das funções da
+ * estrutura de dados
  * Lista
+ * 
  * @author Grupo 1:
- * Ana Gomes Souza,
- * Arthur Sousa Costa,
- * Eduardo Miranda Berlink Santos,
- * Henrique Rezende Bandeira Chiachio,
- * João Lucas Fonseca Chagas,
- * Marco Antonio Barbosa Pereira,
- * Mary Nicole de Sousa Mendes,
- * Pedro César Padre Lima
+ *         Ana Gomes Souza,
+ *         Arthur Sousa Costa,
+ *         Eduardo Miranda Berlink Santos,
+ *         Henrique Rezende Bandeira Chiachio,
+ *         João Lucas Fonseca Chagas,
+ *         Marco Antonio Barbosa Pereira,
+ *         Mary Nicole de Sousa Mendes,
+ *         Pedro César Padre Lima
  * @since 08-05-2025
  * @version 1.0
  */
@@ -74,7 +78,7 @@ public class ListaTest {
         listaTeste.limpar();
 
         try {
-          listaTeste.selecionar(0);
+            listaTeste.selecionar(0);
             fail();
         } catch (IndexOutOfBoundsException e) {
             assertEquals("Posição inválida", e.getMessage());
@@ -138,7 +142,7 @@ public class ListaTest {
         try {
             listaTeste.atualizar("ATT", 0);
             fail();
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             assertEquals("Posição inválida", e.getMessage());
         }
     }
@@ -178,7 +182,7 @@ public class ListaTest {
      * Assegura que não permita inserir um elemento na lista cheia
      */
     @Test
-    public void testeAnexar(){
+    public void testeAnexar() {
         listaTeste.anexar(elemento0);
         listaTeste.anexar(elemento1);
         listaTeste.anexar(elemento2);
@@ -186,15 +190,13 @@ public class ListaTest {
         try {
             listaTeste.anexar(elemento0);
             fail();
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             assertEquals("Lista cheia", e.getMessage());
         }
 
         assertEquals(elemento0, listaTeste.apagar(0));
         assertEquals(elemento2, listaTeste.apagar(1));
         assertEquals(elemento1, listaTeste.apagar(0));
-
-
 
     }
 
@@ -206,7 +208,7 @@ public class ListaTest {
         listaTeste.inserir(elemento0, 0);
         listaTeste.inserir(elemento1, 1);
         listaTeste.inserir(elemento2, 2);
-assertTrue(listaTeste.estaCheia());
+        assertTrue(listaTeste.estaCheia());
     }
 
     /**
@@ -216,6 +218,5 @@ assertTrue(listaTeste.estaCheia());
     public void testEstaVazia() {
         assertTrue(listaTeste.estaVazia());
     }
-
 
 }

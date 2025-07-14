@@ -1,29 +1,33 @@
+package com_2;
+
 import com.example.Fila;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Classe que contem testes unitarios para monitoramento das funções da estrutura de dados
+ * Classe que contem testes unitarios para monitoramento das funções da
+ * estrutura de dados
  * Fila
+ * 
  * @author Grupo 1:
- * Ana Gomes Souza,
- * Arthur Sousa Costa,
- * Eduardo Miranda Berlink Santos,
- * Henrique Rezende Bandeira Chiachio,
- * João Lucas Fonseca Chagas,
- * Marco Antonio Barbosa Pereira,
- * Mary Nicole de Sousa Mendes,
- * Pedro César Padre Lima
+ *         Ana Gomes Souza,
+ *         Arthur Sousa Costa,
+ *         Eduardo Miranda Berlink Santos,
+ *         Henrique Rezende Bandeira Chiachio,
+ *         João Lucas Fonseca Chagas,
+ *         Marco Antonio Barbosa Pereira,
+ *         Mary Nicole de Sousa Mendes,
+ *         Pedro César Padre Lima
  * @since 08-05-2025
  * @version 1.0
  */
 
 public class FilaTest {
-private Fila filaTeste;
-private String elemento0, elemento1, elemento2;
+    private Fila filaTeste;
+    private String elemento0, elemento1, elemento2;
 
-     /**
+    /**
      * Execução antes de cada teste
      */
     @Before
@@ -64,7 +68,7 @@ private String elemento0, elemento1, elemento2;
      * Assegura que não mostre nada de uma fila vazia
      */
     @Test
-    public void testeFrente(){
+    public void testeFrente() {
         try {
             filaTeste.frente();
             fail();
@@ -95,7 +99,7 @@ private String elemento0, elemento1, elemento2;
         try {
             filaTeste.atualizarInicio("ATT");
             fail();
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             assertEquals("Fila vazia", e.getMessage());
         }
 
@@ -123,7 +127,7 @@ private String elemento0, elemento1, elemento2;
         try {
             filaTeste.atualizarFim("ATT");
             fail();
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             assertEquals("Fila vazia", e.getMessage());
         }
 
@@ -154,6 +158,7 @@ private String elemento0, elemento1, elemento2;
 
         assertTrue(filaTeste.estaCheia());
     }
+
     /**
      * Testa metodo que verifica se a fila esta vazia
      */
